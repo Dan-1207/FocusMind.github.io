@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Focus Mind</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<script src="script.js"></script>
+<body>
+
+<!-- 🔝 Barra superior -->
+<header id="barraSuperior" class="barra-superior" style="display: none;">
+  <h1>Focus Mind</h1>
+  <button class="btn-cerrar" onclick="cerrarSesion()">Cerrar sesión</button>
+</header>
+
+<section id="bienvenida" class="pantalla-inicio">
+  <div class="contenido-izquierda">
+    <h1>FOCUS MIND</h1>
+    <p>Menos distracción, más acción</p>
+    <button class="boton-inicio" onclick="mostrarSelectorRol()">Inicio</button>
+  </div>
+  <div class="contenido-derecha">
+    <div class="circulo-logo">
+      <img src="logo-focusmind.png" alt="Logo Focus Mind" />
+    </div>
+  </div>
+</section>
+
+
+<!-- Selector de rol -->
+<section id="selectorRol" class="modal">
+  <div class="modal-content fade-in">
+    <h2>Elije tu rol en el colegio</h2>
+    <div class="roles">
+      <button onclick="elegirRol('Estudiante')">Estudiante</button>
+      <button onclick="elegirRol('Docente')">Docente</button>
+      <button onclick="elegirRol('Directivo')">Directivo</button>
+    </div>
+  </div>
+</section>
+
+<!-- Formularios de inicio -->
+<section id="mainContainer" class="container fade-in" style="display: none;">
+  <div class="form-section">
+    <h2>Iniciar sesión como Estudiante</h2>
+    <form id="formEstudiante">
+      <div class="form-group">
+        <label for="nombre">Nombre completo:</label>
+        <input type="text" id="nombre" required>
+      </div>
+      <div class="form-group">
+  <label for="contrasena">Número de identidad:</label>
+  <div class="campo-cifrado">
+    <input type="password" id="contrasena" required>
+    <button type="button" class="toggle-visibility" onclick="toggleIdentidad('contrasena')">👁️</button>
+  </div>
+</div>
+      <button type="button" class="btn" onclick="iniciarSesion()">Ingresar</button>
+    </form>
+  </div>
+</section>
+
+<section id="mainDocente" class="container fade-in" style="display: none;">
+  <div class="form-section">
+    <h2>Iniciar sesión como Docente</h2>
+    <form id="formDocente">
+      <div class="form-group">
+        <label for="nombreDocente">Nombre completo:</label>
+        <input type="text" id="nombreDocente" required>
+      </div>
+      <div class="form-group">
+  <label for="identidadDocente">Número de identidad:</label>
+  <div class="campo-cifrado">
+    <input type="password" id="identidadDocente" required>
+    <button type="button" class="toggle-visibility" onclick="toggleIdentidad('identidadDocente')">👁️</button>
+  </div>
+</div>
+      <button type="button" class="btn" onclick="iniciarSesionInstitucional()">Ingresar</button>
+    </form>
+  </div>
+</section>
+
+<section id="mainDirectivo" class="container fade-in" style="display: none;">
+  <div class="form-section">
+    <h2>Iniciar sesión como Directivo</h2>
+    <form id="formDirectivo">
+      <div class="form-group">
+        <label for="nombreDirectivo">Nombre completo:</label>
+        <input type="text" id="nombreDirectivo" required>
+      </div>
+      <div class="form-group">
+        <label for="identidadDirectivo">Número de identidad:</label>
+      <div class="campo-cifrado">
+    <input type="password" id="identidadDirectivo" required>
+    <button type="button" class="toggle-visibility" onclick="toggleIdentidad('identidadDirectivo')">👁️</button>
+  </div>
+</div>
+
+      <button type="button" class="btn" onclick="iniciarSesionInstitucional()">Ingresar</button>
+    </form>
+  </div>
+</section>
+
+<!-- Panel Estudiante -->
+<section id="panelEstudiante" class="panel-estudiante fade-in" style="display: none;">
+  <h2 class="titulo-panel">Perfil del Estudiante</h2>
+  <div class="perfil-estudiante">
+    <img id="fotoPerfilEstudiante" src="imgperfiles_default.png" alt="Foto de perfil" class="foto-perfil">
+    <div class="datos-personales">
+      <p><strong>Nombre:</strong> <span id="estudianteNombre"></span></p>
+      <p><strong>Grado:</strong> <span id="estudianteGrado"></span></p>
+      <p><strong>Grupo:</strong> <span id="estudianteGrupo"></span></p>
+    </div>
+  </div>
+  <div id="historialEstudiante" class="historial-faltas">
+    <!-- Tarjetas de faltas se insertan aquí -->
+  </div>
+</section>
+
+<!--Panel Institucional -->
+<section id="panelInstitucional" class="panel-institucional fade-in" style="display: none;">
+  <h2 class="titulo-panel">Perfil Institucional</h2>
+  <div class="perfil-institucional">
+    <img id="fotoPerfilInstitucional" src="imgperfiles_default.png" alt="Foto de perfil" class="foto-perfil">
+    <div class="datos-institucionales">
+      <p><strong>Nombre:</strong> <span id="institucionalNombre"></span></p>
+      <p><strong>Rol:</strong> <span id="institucionalRol"></span></p>
+      <p><strong>Materia/Cargo:</strong> <span id="institucionalDato"></span></p>
+    </div>
+  </div>
+
+  <!--Buscador -->
+  <div class="buscador-estudiantes">
+    <h3>Buscar estudiantes</h3>
+    <input type="text" id="nombreBuscar" placeholder="Nombre / Apellidos">
+    <div class="form-group">
+      <label for="gradoBuscar">Grado:</label>
+      <select id="gradoBuscar">
+        <option value="">Selecciona grado</option>
+        <option value="9">9°</option>
+        <option value="10">10°</option>
+        <option value="11">11°</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="grupoBuscar">Grupo:</label>
+      <select id="grupoBuscar">
+        <option value="">Selecciona grupo</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+    </div>
+    <button class="btn" onclick="buscarEstudiantes()">Buscar</button>
+  </div>
+
+  <!-- Lista de estudiantes -->
+  <div id="listaEstudiantes" class="lista-estudiantes">
+    <!-- Resultados dinámicos -->
+  </div>
+</section>
+
+<div class="fondo-decorativo">
+  <span class="forma1"></span>
+  <span class="forma2"></span>
+  <span class="forma3"></span>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
